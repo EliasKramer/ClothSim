@@ -22,7 +22,7 @@ public class ClothManager : MonoBehaviour
     public float airResistance = 1;
     [SerializeField]
     public float mass = 10;
-
+    
     private float iterationsForStability = 100;
 
     private List<GameObject> points = new List<GameObject>();

@@ -1,19 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[ExecuteInEditMode]
-public class PointScript : MonoBehaviour
+using UnityEngine.EventSystems;
+
+public class PointScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField]
     public bool isLocked;
 
     public Vector2 prevPos;
-
     private void Start()
     {
         prevPos = transform.position;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         updateColor();
     }
@@ -27,5 +27,15 @@ public class PointScript : MonoBehaviour
         {
             GetComponent<SpriteRenderer>().color = Color.white;
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.parent.GetComponent<PlayerManager>().CurrentPointHoveringMouse(gameObject);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.parent.GetComponent<PlayerManager>().CurrentPointHoveringMouse(null);
     }
 }

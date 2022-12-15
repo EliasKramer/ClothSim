@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3878584873929463723}
   - component: {fileID: 3878584873929463720}
   - component: {fileID: 3581801827989640107}
+  - component: {fileID: 8281757592661542512}
   m_Layer: 7
   m_Name: ClothPoint
   m_TagString: Point
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3878584873929463721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.0982088, y: 0.87979496, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -99,3 +100,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLocked: 0
   prevPos: {x: -6.05, y: 2.6}
+--- !u!58 &8281757592661542512
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878584873929463721}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
