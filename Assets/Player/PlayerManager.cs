@@ -10,6 +10,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject settings;
     [SerializeField]
     public GameObject cam;
+    [SerializeField]
+    public GameObject canvas;
 
     public GameObject pointPrefab;
     public GameObject linePrefab;
@@ -28,7 +30,7 @@ public class PlayerManager : MonoBehaviour
             currentSelected.transform.position = mousePos;
             if (lineDraggingActive)
             {
-                currentSelected.GetComponent<ConnectionScript>().point1 = currentPointHovering;
+                //currentSelected.GetComponent<ConnectionScript>().point1 = currentPointHovering;
                 //currentSelected.GetComponent<ConnectionScript>().Point2 = mousePos;
             }
         }
@@ -36,32 +38,57 @@ public class PlayerManager : MonoBehaviour
 
     public void OnClick(InputAction.CallbackContext context)
     {
-        if (context.performed &&
-            currentSelected != null)
+        if (!context.performed || currentSelected == null || canvas.GetComponent<MouseOverHandler>().isMouseOver)
         {
-            if (currentPointHovering != null && currentSelected.tag == "PointConnection" && ! lineDraggingActive)
+            Debug.Log("click could not be connected to an action");
+            return;
+        }
+
+        if(currentSelected.tag == "Point")
+        {
+            if (currentPointHovering == null)
             {
-                Debug.Log("Connecting");
+                Debug.Log("Point could not be set. there was another one in the way");
+                return;
+            }
+            Debug.Log("set point");
+            SetObject(currentSelected);
+            return;
+        }
+        
+        if(currentPointHovering != null)
+        {
+            if (lineDraggingActive && currentSelected.GetComponent<ConnectionScript>().point1 == currentPointHovering)
+            {
+                Debug.Log("the start point was the end point. could not be set");
+                return;
+            }
+            if (lineDraggingActive)
+            {
+                Debug.Log("set connector end");
+                currentSelected.GetComponent<ConnectionScript>().point2 = currentPointHovering;
                 SetObject(currentSelected);
-                //currentSelected.GetComponent<ConnectionScript>().Point2 = mousePos;
-                lineDraggingActive = true;
+                lineDraggingActive = false;
             }
             else
             {
-                Debug.Log("No point selected");
-                SetObject(currentSelected);
+                Debug.Log("set connector start");
+                currentSelected.GetComponent<ConnectionScript>().point1 = currentPointHovering;
+                //SetObject(currentSelected);
+                lineDraggingActive = true;
             }
         }
-        if (lineDraggingActive && currentSelected.tag == "PointConnection")
+        else
         {
-            lineDraggingActive = false;
-            currentSelected.GetComponent<ConnectionScript>().point2 = currentPointHovering;
+            Debug.Log("Line could not be set. no point to start or finish");
+            return;
         }
     }
     public void OnCancel(InputAction.CallbackContext context)
     {
         if (context.performed)
         {
+            Debug.Log("cancel action");
             DestroyCurrentSelected();
         }
     }
@@ -69,45 +96,61 @@ public class PlayerManager : MonoBehaviour
     {
         if (!settings.activeSelf)
         {
+            Debug.Log("overlay true");
             settings.SetActive(true);
         }
         else
         {
+            Debug.Log("overlay false");
             settings.SetActive(false);
         }
     }
     public void SelectPoint(bool isLocked)
     {
+        Debug.Log("select point - islocked: " + isLocked);
         pointPrefab.GetComponent<PointScript>().isLocked = isLocked;
         SelectPlacableObject(pointPrefab);
     }
     public void SelectLine()
     {
+        Debug.Log("select line");
         SelectPlacableObject(linePrefab);
     }
     public void CurrentPointHoveringMouse(GameObject point)
     {
-        Debug.Log("Hovering " + point == null ? "null" : point);
+        Debug.Log("Hovering " + (point == null ? "null" : point));
         currentPointHovering = point;
     }
     private void SelectPlacableObject(GameObject givenPrefab)
     {
+        Debug.Log("select placable object");
         DestroyCurrentSelected();
         SetObject(givenPrefab);
     }
     private void SetObject(GameObject givenPrefab)
     {
         currentSelected = Instantiate(givenPrefab, mousePos, Quaternion.identity, transform);
-        currentSelected.name = currentSelected.tag +"_" + currPointIdx.ToString();
+        currentSelected.name = currentSelected.tag + "_" + currPointIdx.ToString();
         currPointIdx++;
+        Debug.Log("set current selected object (and instanciante) " + currentSelected.name);
     }
     private void DestroyCurrentSelected()
     {
-        if (currentSelected != null && !currentSelected.IsPrefabInstance())
+        Debug.Log("try destroy current selected");
+        if (currentSelected == null)
         {
-            Destroy(currentSelected);
-            currentSelected = null;
+            Debug.Log("current selected is null");
+            return;
         }
+        if (currentSelected.IsPrefabInstance())
+        {
+            Debug.Log("cant destroy prefab");
+            Destroy(currentSelected);
+        }
+        Debug.Log("destroy current selected");
+        Destroy(currentSelected);
+        currentSelected = null;
+        lineDraggingActive = false;
     }
     private Vector2 mousePos
     {

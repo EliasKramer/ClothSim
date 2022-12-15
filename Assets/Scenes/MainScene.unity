@@ -298,7 +298,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143, y: -170}
+  m_AnchoredPosition: {x: 143, y: -106}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &39541126
@@ -459,7 +459,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -143, y: -170}
+  m_AnchoredPosition: {x: -143, y: -106}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &479146229
@@ -2053,6 +2053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings: {fileID: 422842549}
   cam: {fileID: 519420028}
+  canvas: {fileID: 1334834026}
   pointPrefab: {fileID: 3878584873929463721, guid: 4af6075c98ebe1f4c93daba9ba318e94, type: 3}
   linePrefab: {fileID: 6167348688305748422, guid: 7d15b63a5809dc740b71791af48e9432, type: 3}
 --- !u!114 &1815355562

@@ -99,4 +99,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   point1: {fileID: 0}
   point2: {fileID: 0}
-  thickness: 0.8
+  thickness: 0.2
+  length: 0
