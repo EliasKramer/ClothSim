@@ -9,24 +9,16 @@ public class PointScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public bool isLocked;
 
     public Vector2 prevPos;
+    public Color color;
     private void Start()
     {
         prevPos = transform.position;
-    }
-    private void FixedUpdate()
-    {
         updateColor();
     }
     private void updateColor()
     {
-        if (isLocked)
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else
-        {
-            GetComponent<SpriteRenderer>().color = Color.white;
-        }
+        color = isLocked ? Color.red : Color.white;
+        GetComponent<SpriteRenderer>().color = color;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
