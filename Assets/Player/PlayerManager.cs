@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -43,7 +44,7 @@ public class PlayerManager : MonoBehaviour
     private static int currPointIdx = 0;
 
     private GameObject pointMouseIsOver = null;
-    
+
     private bool connectionMode = false;
 
     private GameObject currenSelectionObj = null;
@@ -244,6 +245,10 @@ public class PlayerManager : MonoBehaviour
     {
         return mouseDown;
     }
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     private void DestroyCurrentSelected()
     {
         Debug.Log("try destroy current selected");
@@ -252,13 +257,13 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("current selected is null");
             return;
         }
-        if (currentSelected.IsPrefabDefinition())
-        {
-            Debug.Log("cant destroy prefab");
-            return;
-        }
         Debug.Log("destroy current selected");
-        Destroy(currentSelected);
+
+        if (!gameObjIsLine(currentSelected))
+        {
+            Destroy(currentSelected);
+        }
+
         currentSelected = null;
     }
     private bool gameObjIsPoint(GameObject gameObject)
